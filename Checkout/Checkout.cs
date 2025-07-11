@@ -9,9 +9,16 @@ public class Checkout : ICheckout
 
         foreach (var item in _scannedItems)
         {
-            if (item == "A")
+            switch (item)
             {
-                totalPrice += 50;
+                case "A":
+                    totalPrice += 50;
+                    break;
+                case "B":
+                    totalPrice += 30;
+                    break;
+                default:
+                    throw new ArgumentException($"Unknown item: {item}");
             }
         }
 
