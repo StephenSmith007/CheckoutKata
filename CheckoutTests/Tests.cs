@@ -28,6 +28,8 @@ public class Tests
     }
 
     [TestCase(new string[] { "A", "A" }, 100)]
+    [TestCase(new string[] { "B", "B" }, 60)]
+    [TestCase(new string[] { "A", "B" }, 80)]
     public void Scanning_Combination_Of_Two_Items_Returns_Combined_Price(string[] items, int expectedPrice)
     {
         foreach (var item in items)
