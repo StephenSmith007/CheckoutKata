@@ -17,4 +17,12 @@ public class Tests
     {
         Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
     }
+
+    [Test]
+    public void Scanning_One_Item_A_Returns_50()
+    {
+        _checkout.Scan("A");
+
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(50));
+    }
 }
