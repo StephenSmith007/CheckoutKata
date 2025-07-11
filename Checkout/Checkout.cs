@@ -3,6 +3,7 @@
 public class Checkout : ICheckout
 {
     List<string> _scannedItems = new List<string>();
+
     public int GetTotalPrice()
     {
         var totalPrice = 0;

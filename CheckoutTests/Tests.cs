@@ -39,4 +39,13 @@ public class Tests
 
         Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
     }
+
+    [Test]
+    public void Scanning_Unknown_Item_Throws_Error_When_Getting_Total_Price()
+    {
+        _checkout.Scan(Guid.NewGuid().ToString());
+
+        Assert.Throws<ArgumentException>(() => _checkout.GetTotalPrice());
+
+    }
 }
