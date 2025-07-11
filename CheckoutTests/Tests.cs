@@ -20,6 +20,7 @@ public class Tests
 
     [TestCase("A", 50)]
     [TestCase("B", 30)]
+    [TestCase("C", 20)]
     public void Scanning_One_Item_Returns_Price_Of_Single_Item(string item, int expectedPrice)
     {
         _checkout.Scan(item);
