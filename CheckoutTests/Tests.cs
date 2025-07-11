@@ -26,4 +26,13 @@ public class Tests
 
         Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
     }
+
+    [TestCase(new string[] { "A", "A" }, 100)]
+    public void Scanning_Combination_Of_Two_Items_Returns_Combined_Price(string[] items, int expectedPrice)
+    {
+        foreach (var item in items)
+            _checkout.Scan(item);
+
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
+    }
 }
