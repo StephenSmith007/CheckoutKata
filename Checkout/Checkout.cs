@@ -20,6 +20,9 @@ public class Checkout : ICheckout
                 case "C":
                     totalPrice += 20;
                     break;
+                case "D":
+                    totalPrice += 15;
+                    break;
                 default:
                     throw new ArgumentException($"Unknown item: {item}");
             }
