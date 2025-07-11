@@ -18,11 +18,11 @@ public class Tests
         Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
     }
 
-    [Test]
-    public void Scanning_One_Item_A_Returns_50()
+    [TestCase("A", 50)]
+    public void Scanning_One_Item_Returns_Price_Of_Single_Item(string item, int expectedPrice)
     {
-        _checkout.Scan("A");
+        _checkout.Scan(item);
 
-        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(50));
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
     }
 }
