@@ -4,29 +4,24 @@ public class Checkout : ICheckout
 {
     List<string> _scannedItems = new List<string>();
 
+    Dictionary<string, int> itemPrices = new Dictionary<string, int>
+    {
+        { "A", 50 },
+        { "B", 30 },
+        { "C", 20 },
+        { "D", 15 }
+    };
+
     public int GetTotalPrice()
     {
         var totalPrice = 0;
 
         foreach (var item in _scannedItems)
         {
-            switch (item)
-            {
-                case "A":
-                    totalPrice += 50;
-                    break;
-                case "B":
-                    totalPrice += 30;
-                    break;
-                case "C":
-                    totalPrice += 20;
-                    break;
-                case "D":
-                    totalPrice += 15;
-                    break;
-                default:
-                    throw new ArgumentException($"Unknown item: {item}");
-            }
+            if (!itemPrices.ContainsKey(item))
+                throw new ArgumentException($"Unknown item: {item}");
+
+            totalPrice += itemPrices[item];
         }
 
         return totalPrice;
