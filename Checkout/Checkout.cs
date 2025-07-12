@@ -31,6 +31,8 @@ public class Checkout : ICheckout
 
     public void Scan(string item)
     {
+        ArgumentNullException.ThrowIfNull(item);
+
         var itemObj = _repository.GetItem(item);
 
         if (_scannedItems.ContainsKey(itemObj))

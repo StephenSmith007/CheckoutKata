@@ -64,11 +64,31 @@ public class Tests
         Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
     }
 
+    [Test]
+    public void Scanning_Null_Item_Throws_Error_But_Does_Not_Crash_Checkout()
+    {
+        Assert.Throws<ArgumentNullException>(() => _checkout.Scan(null));
+
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
+    }
+
+    [TestCase(new string[] { "A", "A", null, "A", "D" }, 145)]
+    [TestCase(new string[] { "A", "A", "Unknown", "A", "D" }, 145)]
     [TestCase(new string[] { "A", "A", "B", "B", "C", "D", "A", "B", "C", "B", "A" }, 325)]
     public void Scanning_Multiple_Combinations_Items_Returns_Correct_Price(string[] items, int expectedPrice)
     {
         foreach (var item in items)
-            _checkout.Scan(item);
+        {
+            try
+            {
+                _checkout.Scan(item);
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex, Is.TypeOf<ArgumentException>().Or.TypeOf<ArgumentNullException>());
+            }
+                    
+        }
 
         Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
     }
