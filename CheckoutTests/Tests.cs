@@ -43,6 +43,11 @@ public class Tests
     [TestCase(new string[] { "A", "B" }, 80)]
     [TestCase(new string[] { "A", "C" }, 70)]
     [TestCase(new string[] { "A", "D" }, 65)]
+    [TestCase(new string[] { "B", "C" }, 50)]
+    [TestCase(new string[] { "B", "D" }, 45)]
+    [TestCase(new string[] { "C", "C" }, 40)]
+    [TestCase(new string[] { "C", "D" }, 35)]
+    [TestCase(new string[] { "D", "D" }, 30)]
     public void Scanning_Combination_Of_Two_Items_Returns_Combined_Price(string[] items, int expectedPrice)
     {
         foreach (var item in items)
