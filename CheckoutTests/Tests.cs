@@ -63,4 +63,13 @@ public class Tests
 
         Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
     }
+
+    [TestCase(new string[] { "A", "A", "B", "B", "C", "D", "A", "B", "C", "B", "A" }, 325)]
+    public void Scanning_Multiple_Combinations_Items_Returns_Correct_Price(string[] items, int expectedPrice)
+    {
+        foreach (var item in items)
+            _checkout.Scan(item);
+
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
+    }
 }
