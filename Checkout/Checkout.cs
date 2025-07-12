@@ -2,31 +2,27 @@
 
 public class Checkout : ICheckout
 {
-    List<string> _scannedItems = new List<string>();
+    List<Item> _scannedItems = new List<Item>();
 
-    Dictionary<string, int> itemPrices = new Dictionary<string, int>
+    private readonly IRepository _repository;
+
+    public Checkout(IRepository repository)
     {
-        { "A", 50 },
-        { "B", 30 },
-        { "C", 20 },
-        { "D", 15 }
-    };
+        _repository = repository;
+    }
 
     public int GetTotalPrice()
     {
         var totalPrice = 0;
 
         foreach (var item in _scannedItems)
-            totalPrice += itemPrices[item];
+            totalPrice += item.Price;
 
         return totalPrice;
     }
 
     public void Scan(string item)
     {
-        if (!itemPrices.ContainsKey(item))
-            throw new ArgumentException($"Unknown item: {item}");
-
-        _scannedItems.Add(item);
+        _scannedItems.Add(_repository.GetItem(item));
     }
 }

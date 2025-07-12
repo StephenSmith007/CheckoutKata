@@ -9,7 +9,7 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        _checkout = new Checkout();
+        _checkout = new Checkout(new TestRepository());
     }
 
     [Test]
