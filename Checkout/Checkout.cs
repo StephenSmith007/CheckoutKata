@@ -17,18 +17,16 @@ public class Checkout : ICheckout
         var totalPrice = 0;
 
         foreach (var item in _scannedItems)
-        {
-            if (!itemPrices.ContainsKey(item))
-                throw new ArgumentException($"Unknown item: {item}");
-
             totalPrice += itemPrices[item];
-        }
 
         return totalPrice;
     }
 
     public void Scan(string item)
     {
+        if (!itemPrices.ContainsKey(item))
+            throw new ArgumentException($"Unknown item: {item}");
+
         _scannedItems.Add(item);
     }
 }

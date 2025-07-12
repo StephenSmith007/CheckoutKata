@@ -41,11 +41,10 @@ public class Tests
     }
 
     [Test]
-    public void Scanning_Unknown_Item_Throws_Error_When_Getting_Total_Price()
+    public void Scanning_Unknown_Item_Throws_Error_But_Does_Not_Crash_Checkout()
     {
-        _checkout.Scan(Guid.NewGuid().ToString());
+        Assert.Throws<ArgumentException>(() => _checkout.Scan(Guid.NewGuid().ToString()));
 
-        Assert.Throws<ArgumentException>(() => _checkout.GetTotalPrice());
-
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
     }
 }
