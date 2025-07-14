@@ -13,17 +13,28 @@ public class Checkout : ICheckout
         _repository = repository;
     }
 
-    public int GetTotalPrice()
+    public Money GetTotalPrice()
     {
-        var totalPrice = 0;
+        Money totalPrice = new Money(new decimal(0));
 
         foreach (var item in _scannedItems)
         {
-            int bundles = item.Key.SpecialPrice != null ? item.Value / item.Key.SpecialPrice.Quantity : 0;
-            int remainder = item.Value - (bundles * (item.Key.SpecialPrice?.Quantity ?? 0));
+            if (item.Key.SpecialPrice != null) // Ensure SpecialPrice is not null
+            {
+                int bundles = item.Value / item.Key.SpecialPrice.Quantity;
+                int remainder = item.Value - (bundles * item.Key.SpecialPrice.Quantity);
 
-            totalPrice += item.Key.SpecialPrice?.Price * bundles ?? 0;
-            totalPrice += item.Key.Price * remainder;
+                for (int i = 0; i < bundles; i++)
+                    totalPrice += item.Key.SpecialPrice.Price;
+
+                for (int j = 0; j < remainder; j++)
+                    totalPrice += item.Key.Price;
+            }
+            else
+            {
+                for (int k = 0; k < item.Value; k++)
+                    totalPrice += item.Key.Price;
+            }
         }
 
         return totalPrice;
