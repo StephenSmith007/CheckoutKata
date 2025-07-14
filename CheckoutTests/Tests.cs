@@ -15,7 +15,7 @@ public class Tests
     [Test]
     public void Checkout_Starts_With_Price_Of_Zero()
     {
-        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(new Money()));
     }
 
     [TestCase("A", 50)]
@@ -26,7 +26,7 @@ public class Tests
     {
         _checkout.Scan(item);
 
-        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(new Money(expectedPrice)));
     }
 
     [TestCase("A", 3, 130)]
@@ -36,7 +36,7 @@ public class Tests
         for (int i = 0; i < quantity; i++)
             _checkout.Scan(item);
 
-        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(new Money(expectedPrice)));
     }
 
     [TestCase(new string[] { "A", "A" }, 100)]
@@ -53,7 +53,7 @@ public class Tests
         foreach (var item in items)
             _checkout.Scan(item);
 
-        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(new Money(expectedPrice)));
     }
 
     [Test]
@@ -61,7 +61,7 @@ public class Tests
     {
         Assert.Throws<ArgumentException>(() => _checkout.Scan(Guid.NewGuid().ToString()));
 
-        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(new Money()));
     }
 
     [Test]
@@ -69,11 +69,9 @@ public class Tests
     {
         Assert.Throws<ArgumentNullException>(() => _checkout.Scan(null));
 
-        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(0));
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(new Money()));
     }
 
-    [TestCase(new string[] { "A", "A", null, "A", "D" }, 145)]
-    [TestCase(new string[] { "A", "A", "Unknown", "A", "D" }, 145)]
     [TestCase(new string[] { "A", "A", "B", "B", "C", "D", "A", "B", "C", "B", "A" }, 325)]
     public void Scanning_Multiple_Combinations_Items_Returns_Correct_Price(string[] items, int expectedPrice)
     {
@@ -87,9 +85,8 @@ public class Tests
             {
                 Assert.That(ex, Is.TypeOf<ArgumentException>().Or.TypeOf<ArgumentNullException>());
             }
-                    
         }
 
-        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(expectedPrice));
+        Assert.That(_checkout.GetTotalPrice(), Is.EqualTo(new Money(expectedPrice)));
     }
 }

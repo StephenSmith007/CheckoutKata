@@ -1,7 +1,7 @@
 ﻿namespace Application;
 public class Item
 {
-    public Item(string sku, int price, SpecialPrice? specialPrice = null)
+    public Item(string sku, Money price, SpecialPrice? specialPrice = null)
     {
         SKU = sku;
         Price = price;
@@ -9,6 +9,6 @@ public class Item
     }
 
     public string SKU { get; }
-    public int Price { get; }
+    public Money Price { get; }
     public SpecialPrice SpecialPrice { get; }
 }
