@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Application;
+﻿namespace Application;
 
 public class Money
 {
